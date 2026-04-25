@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { startTransition, useEffect, useState } from "react";
 import type { Collection } from "../types/collection";
 import type { Snippet, SnippetDraft } from "../types/snippet";
 import {
@@ -37,13 +37,15 @@ export function SnippetForm({
   const [formError, setFormError] = useState<string | null>(null);
 
   useEffect(() => {
-    setTitle(initialSnippet?.title ?? "");
-    setBody(initialSnippet?.body ?? "");
-    setTags(serializeTags(initialSnippet?.tags ?? []));
-    setFavorite(initialSnippet?.favorite ?? false);
-    setKeyboardHint(initialSnippet?.keyboardHint ?? "");
-    setSelectedCollectionId(initialSnippet?.collectionId ?? null);
-    setFormError(null);
+    startTransition(() => {
+      setTitle(initialSnippet?.title ?? "");
+      setBody(initialSnippet?.body ?? "");
+      setTags(serializeTags(initialSnippet?.tags ?? []));
+      setFavorite(initialSnippet?.favorite ?? false);
+      setKeyboardHint(initialSnippet?.keyboardHint ?? "");
+      setSelectedCollectionId(initialSnippet?.collectionId ?? null);
+      setFormError(null);
+    });
   }, [initialSnippet]);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {

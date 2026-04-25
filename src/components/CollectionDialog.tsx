@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { startTransition, useEffect, useRef, useState } from "react";
 import type { Collection, CollectionDraft } from "../types/collection";
 import { XIcon } from "./ui/icons";
 
@@ -42,11 +42,13 @@ export function CollectionDialog({
       return;
     }
 
-    setName(existingCollection?.name ?? "");
-    setDescription(existingCollection?.description ?? "");
-    setColor(existingCollection?.color ?? DEFAULT_COLOR);
-    setNameError(null);
-    setIsSaving(false);
+    startTransition(() => {
+      setName(existingCollection?.name ?? "");
+      setDescription(existingCollection?.description ?? "");
+      setColor(existingCollection?.color ?? DEFAULT_COLOR);
+      setNameError(null);
+      setIsSaving(false);
+    });
 
     const timeout = setTimeout(() => {
       inputRef.current?.focus();

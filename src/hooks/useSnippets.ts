@@ -109,7 +109,7 @@ export function useSnippets() {
     } catch (caughtError) {
       const message = getErrorMessage(caughtError)
       setError(message)
-      throw new Error(message)
+      throw new Error(message, { cause: caughtError })
     }
   }
 
