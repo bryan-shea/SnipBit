@@ -1,0 +1,56 @@
+name: Package Extension
+
+on:
+    workflow_dispatch:
+
+        # Least-privilege: only read access needed for packaging.
+permissions:
+    contents: read
+
+jobs:
+    package:
+        name: Build and package Chrome extension ZIP
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: ${{ vars.NODE_VERSION || '20' }}
+                  cache: npm
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Type check
+              run: npm run typecheck
+
+            - name: Build
+              run: npm run build
+
+            - name: Validate extension
+              run: npm run validate:extension
+
+            - name: Package extension
+              run: npm run package:extension
+              env:
+                  BUILD_DIR: ${{ vars.BUILD_DIR || 'dist' }}
+                  PACKAGE_DIR: ${{ vars.PACKAGE_DIR || 'artifacts' }}
+
+            - name: Locate ZIP
+              id: zip
+              run: |
+                  ZIP=$(find "${{ vars.PACKAGE_DIR || 'artifacts' }}" -name '*.zip' | head -1)
+                  echo "path=$ZIP" >> "$GITHUB_OUTPUT"
+                  echo "name=$(basename "$ZIP")" >> "$GITHUB_OUTPUT"
+
+            - name: Upload packaged extension
+              uses: actions/upload-artifact@v4
+              with:
+                  name: ${{ steps.zip.outputs.name }}
+                  path: ${{ steps.zip.outputs.path }}
+                  retention-days: 30
+                  if-no-files-found: error

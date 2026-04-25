@@ -1,0 +1,95 @@
+name: Release
+
+on:
+    push:
+        tags:
+            - "v*.*.*"
+    workflow_dispatch:
+        inputs:
+            tag:
+                description: >
+                    Release tag to create (e.g. v1.0.0). The tag must match the
+                    version in manifest.json. Create the git tag locally first,
+                    then push it, or use this input to trigger a release for an
+                    existing tag.
+                required: true
+                type: string
+
+# Write access is required to create GitHub Releases.
+permissions:
+    contents: write
+
+jobs:
+    release:
+        name: Build, package, and publish GitHub Release
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Resolve tag
+              id: tag
+              run: |
+                  if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+                    echo "name=${{ inputs.tag }}" >> "$GITHUB_OUTPUT"
+                  else
+                    echo "name=${{ github.ref_name }}" >> "$GITHUB_OUTPUT"
+                  fi
+
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                  # Check out the tag being released, not the default branch HEAD.
+                  ref: ${{ steps.tag.outputs.name }}
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: ${{ vars.NODE_VERSION || '20' }}
+                  cache: npm
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Type check
+              run: npm run typecheck
+
+            - name: Build
+              run: npm run build
+
+            - name: Validate extension
+              run: npm run validate:extension
+
+            - name: Validate manifest version matches tag
+              run: |
+                  TAG="${{ steps.tag.outputs.name }}"
+                  MANIFEST_VERSION="v$(jq -r '.version' dist/manifest.json)"
+                  echo "Tag             : $TAG"
+                  echo "Manifest version: $MANIFEST_VERSION"
+                  if [[ "$TAG" != "$MANIFEST_VERSION" ]]; then
+                    echo "::error::Tag ($TAG) does not match manifest.json version ($MANIFEST_VERSION)."
+                    echo "         Update manifest.json and package.json before tagging."
+                    exit 1
+                  fi
+
+            - name: Package extension
+              run: npm run package:extension
+              env:
+                  BUILD_DIR: ${{ vars.BUILD_DIR || 'dist' }}
+                  PACKAGE_DIR: ${{ vars.PACKAGE_DIR || 'artifacts' }}
+
+            - name: Locate ZIP
+              id: zip
+              run: |
+                  ZIP=$(find "${{ vars.PACKAGE_DIR || 'artifacts' }}" -name '*.zip' | head -1)
+                  echo "path=$ZIP" >> "$GITHUB_OUTPUT"
+                  echo "name=$(basename "$ZIP")" >> "$GITHUB_OUTPUT"
+
+            - name: Create GitHub Release
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: |
+                  TAG="${{ steps.tag.outputs.name }}"
+                  gh release create "$TAG" \
+                    "${{ steps.zip.outputs.path }}" \
+                    --title "${{ vars.EXTENSION_NAME || 'SnipBit' }} $TAG" \
+                    --generate-notes \
+                    --verify-tag

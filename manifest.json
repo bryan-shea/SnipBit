@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "SnipBit",
+  "version": "0.1.0",
+  "description": "Save, search, and reuse text snippets from your Chrome toolbar and context menu.",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "SnipBit – click to open snippet library",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  },
+  "background": {
+    "service_worker": "assets/serviceWorker.js",
+    "type": "module"
+  },
+  "permissions": ["storage", "contextMenus", "sidePanel"],
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  }
+}

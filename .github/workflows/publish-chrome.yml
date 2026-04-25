@@ -1,0 +1,112 @@
+name: Publish to Chrome Web Store
+
+# Publishing is MANUAL ONLY. This workflow never runs automatically on push or PR.
+# It requires approval from the chrome-web-store-production environment before
+# production secrets are exposed.
+on:
+    workflow_dispatch:
+        inputs:
+            publish_type:
+                description: >
+                    Publish type. DEFAULT_PUBLISH: release to all users
+                    immediately (subject to review). STAGED_PUBLISH: release to
+                    trusted testers only.
+                required: true
+                default: DEFAULT_PUBLISH
+                type: choice
+                options:
+                    - DEFAULT_PUBLISH
+                    - STAGED_PUBLISH
+            skip_review:
+                description: >
+                    Request skipReview (only works if the item is eligible per
+                    Chrome Web Store policy). Leave as false unless you have
+                    confirmed your item qualifies.
+                type: boolean
+                default: false
+            dry_run:
+                description: >
+                    Dry run — build, validate, and package the extension but do
+                    NOT upload or publish. Always run dry_run: true first to
+                    confirm the artifact is correct.
+                type: boolean
+                default: true
+
+# Least-privilege: contents:read is sufficient. Publish secrets come from the environment.
+permissions:
+    contents: read
+
+jobs:
+    publish:
+        name: Publish Chrome extension
+        runs-on: ubuntu-latest
+
+        # Protected environment — requires manual approval before secrets are exposed.
+        # Create this environment in: Settings > Environments > chrome-web-store-production
+        environment:
+            name: chrome-web-store-production
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: ${{ vars.NODE_VERSION || '20' }}
+                  cache: npm
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Type check
+              run: npm run typecheck
+
+            - name: Build
+              run: npm run build
+
+            - name: Validate extension
+              run: npm run validate:extension
+
+            - name: Package extension
+              run: npm run package:extension
+              env:
+                  BUILD_DIR: ${{ vars.BUILD_DIR || 'dist' }}
+                  PACKAGE_DIR: ${{ vars.PACKAGE_DIR || 'artifacts' }}
+
+            - name: Locate ZIP
+              id: zip
+              run: |
+                  ZIP=$(find "${{ vars.PACKAGE_DIR || 'artifacts' }}" -name '*.zip' | head -1)
+                  echo "path=$ZIP" >> "$GITHUB_OUTPUT"
+                  echo "name=$(basename "$ZIP")" >> "$GITHUB_OUTPUT"
+
+            - name: Upload artifact (dry run and normal)
+              uses: actions/upload-artifact@v4
+              with:
+                  name: ${{ steps.zip.outputs.name }}
+                  path: ${{ steps.zip.outputs.path }}
+                  retention-days: 30
+                  if-no-files-found: error
+
+            # ---------------------------------------------------------------------------
+            # Dry run stops here. Steps below only run when dry_run is false.
+            # ---------------------------------------------------------------------------
+
+            - name: Dry run complete — skipping upload and publish
+              if: ${{ inputs.dry_run == true }}
+              run: |
+                  echo "Dry run complete. Artifact uploaded above for inspection."
+                  echo "Re-run with dry_run: false to publish to the Chrome Web Store."
+
+            - name: Publish to Chrome Web Store
+              if: ${{ inputs.dry_run == false }}
+              env:
+                  CWS_EXTENSION_ID: ${{ secrets.CWS_EXTENSION_ID }}
+                  CWS_CLIENT_ID: ${{ secrets.CWS_CLIENT_ID }}
+                  CWS_CLIENT_SECRET: ${{ secrets.CWS_CLIENT_SECRET }}
+                  CWS_REFRESH_TOKEN: ${{ secrets.CWS_REFRESH_TOKEN }}
+                  EXTENSION_ZIP_PATH: ${{ steps.zip.outputs.path }}
+                  CWS_PUBLISH_TYPE: ${{ inputs.publish_type }}
+                  CWS_SKIP_REVIEW: ${{ inputs.skip_review }}
+              run: node scripts/publish-chrome-web-store.mjs

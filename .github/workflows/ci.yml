@@ -1,0 +1,51 @@
+name: CI
+
+on:
+    push:
+        branches: [ main ]
+    pull_request:
+
+        # Least-privilege permissions for CI. Publishing secrets are NOT accessible here.
+permissions:
+    contents: read
+
+jobs:
+    ci:
+        name: Type check, lint, build, and validate
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v4
+              with:
+                  # Override via repository variable NODE_VERSION, default to 20.
+                  node-version: ${{ vars.NODE_VERSION || '20' }}
+                  cache: npm
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Type check
+              run: npm run typecheck
+
+            - name: Lint
+              run: npm run lint
+
+            - name: Build
+              # build already runs typecheck internally; the explicit step above
+              # surfaces type errors as a distinct CI step for clearer failure messages.
+              run: npm run build
+
+            - name: Validate extension
+              run: npm run validate:extension
+
+            - name: Upload extension artifact
+              uses: actions/upload-artifact@v4
+              with:
+                  name: extension-dist-${{ github.sha }}
+                  path: ${{ vars.BUILD_DIR || 'dist' }}/
+                  retention-days: 7
+                  if-no-files-found: error
