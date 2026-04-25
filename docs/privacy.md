@@ -5,7 +5,7 @@ permalink: /privacy/
 
 # Privacy Policy for SnipBit
 
-Effective date: [Month Day, Year]
+Effective date: April 25, 2026
 
 SnipBit is a Chrome extension for saving, organizing, searching, favoriting, copying, and reusing text snippets.
 

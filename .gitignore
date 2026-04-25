@@ -19,6 +19,21 @@ artifacts/
 .env
 .env.*
 
+# Google Cloud / service account credential files
+credentials.json
+service-account*.json
+*-service-account.json
+
+# npm publish token file
+.npmrc
+
+# Generic secret files
+*.secret
+secrets.*
+
+# Local OAuth token helper — never commit
+scripts/get-cws-refresh-token.mjs
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
