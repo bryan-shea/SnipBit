@@ -1,68 +1,164 @@
 <p align="center">
-  <img width="708" height="216" alt="SnipBit-Logo-1" src="https://github.com/user-attachments/assets/3d465e6e-6dea-499d-9713-95273751ae83" />
-</p
+  <img width="708" height="216" alt="SnipBit logo" src="https://github.com/user-attachments/assets/3d465e6e-6dea-499d-9713-95273751ae83" />
+</p>
 
+<p align="center">
+  <strong>Save, organize, and reuse text snippets from your browser — fast.</strong>
+</p>
 
+<p align="center">
+  SnipBit is a local-first Manifest V3 Chrome extension with a quick-access popup, full side-panel library, collections, and right-click snippet capture.
+</p>
 
-[![CI](https://github.com/bryan-shea/SnipBit/actions/workflows/ci.yml/badge.svg)](https://github.com/bryan-shea/SnipBit/actions/workflows/ci.yml)
+<p align="center">
+  <a href="https://github.com/bryan-shea/SnipBit/actions/workflows/ci.yml">
+    <img alt="CI" src="https://github.com/bryan-shea/SnipBit/actions/workflows/ci.yml/badge.svg" />
+  </a>
+  <a href="https://github.com/bryan-shea/SnipBit/actions/workflows/package.yml">
+    <img alt="Package" src="https://github.com/bryan-shea/SnipBit/actions/workflows/package.yml/badge.svg" />
+  </a>
+  <a href="https://github.com/bryan-shea/SnipBit/actions/workflows/release.yml">
+    <img alt="Release" src="https://github.com/bryan-shea/SnipBit/actions/workflows/release.yml/badge.svg" />
+  </a>
+  <a href="https://github.com/bryan-shea/SnipBit/actions/workflows/publish-chrome.yml">
+    <img alt="Chrome publish" src="https://github.com/bryan-shea/SnipBit/actions/workflows/publish-chrome.yml/badge.svg" />
+  </a>
+  <a href="https://github.com/bryan-shea/SnipBit/releases">
+    <img alt="GitHub release" src="https://img.shields.io/github/v/release/bryan-shea/SnipBit?style=flat-square&logo=github" />
+  </a>
+</p>
 
-SnipBit is a Manifest V3 Chrome extension for saving, searching, favoriting, copying, and reusing text snippets without any backend. It includes a compact popup for quick access, a side panel for full snippet management including collections, and a right-click workflow for saving highlighted text from normal webpages.
+<p align="center">
+  <img alt="Chrome Web Store pending review" src="https://img.shields.io/badge/Chrome%20Web%20Store-Pending%20review-F59E0B?style=flat-square&logo=googlechrome&logoColor=white" />
+  <img alt="Manifest V3" src="https://img.shields.io/badge/Manifest%20V3-Chrome-4285F4?style=flat-square&logo=googlechrome&logoColor=white" />
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-Ready-3178C6?style=flat-square&logo=typescript&logoColor=white" />
+  <img alt="React" src="https://img.shields.io/badge/React-UI-61DAFB?style=flat-square&logo=react&logoColor=111827" />
+  <img alt="Vite" src="https://img.shields.io/badge/Vite-Build-646CFF?style=flat-square&logo=vite&logoColor=white" />
+  <img alt="Local first" src="https://img.shields.io/badge/Local--first-No%20backend-16A34A?style=flat-square" />
+  <img alt="No analytics" src="https://img.shields.io/badge/Privacy-No%20analytics-0F766E?style=flat-square" />
+</p>
+
+<p align="center">
+  <a href="#features">Features</a>
+  ·
+  <a href="#screenshots">Screenshots</a>
+  ·
+  <a href="#install">Install</a>
+  ·
+  <a href="#development">Development</a>
+  ·
+  <a href="#permissions">Permissions</a>
+  ·
+  <a href="#cicd">CI/CD</a>
+  ·
+  <a href="#roadmap">Roadmap</a>
+</p>
+
+---
+
+## Overview
+
+SnipBit is a focused snippet manager for Chrome. It helps you save reusable text, organize snippets into collections, and copy what you need without leaving your browser workflow.
+
+Use it for:
+
+- Email replies and follow-ups.
+- Support responses.
+- Sales/outreach templates.
+- Research notes.
+- Code/text fragments.
+- Frequently reused links, blurbs, or prompts.
+
+SnipBit runs locally in the browser. It does not require an account, backend, analytics service, or broad host permissions.
+
+---
 
 ## Features
 
-- Create snippets manually from the side panel.
-- Edit, delete, duplicate, favorite, and search snippets.
-- Copy snippets from the popup or side panel.
-- Save highlighted page text through the context menu item `Save selection to SnipBit`.
-- Organize snippets into collections.
-- Filter snippets by collection in both the popup and side panel.
-- Persist all data locally with `chrome.storage.local`.
-- Seed a few demo snippets on first run only. Remove them by setting `ENABLE_DEMO_SNIPPETS` to `false` in `src/services/snippetStorage.ts`.
+- **Quick copy workflow** — search and copy saved snippets from the toolbar popup.
+- **Full snippet library** — create, edit, duplicate, delete, favorite, and organize snippets in the Chrome side panel.
+- **Collections** — group related snippets and filter by All, Favorites, Unassigned, or a specific collection.
+- **Right-click capture** — highlight text on a webpage and save it through `Save selection to SnipBit`.
+- **Local-first storage** — persist snippets, collections, and preferences with `chrome.storage.local`.
+- **Minimal permissions** — no host permissions, no remote code, no analytics, and no backend.
+- **Chrome Web Store-ready packaging** — CI/CD scripts validate, build, package, release, and publish extension ZIPs.
+
+---
+
+## Screenshots
+
+> Add finalized screenshots before public launch.
+
+Create this folder and add the images below:
+
+```txt
+docs/assets/screenshots/
+```
+
+| Popup | Side Panel |
+| --- | --- |
+| <img src="docs/assets/screenshots/popup.png" alt="SnipBit popup showing searchable snippet cards" width="360" /> | <img src="docs/assets/screenshots/side-panel.png" alt="SnipBit side panel showing collections and snippet editor" width="520" /> |
+
+| Save Selection | Collections |
+| --- | --- |
+| <img src="docs/assets/screenshots/context-menu.png" alt="Right-click context menu for saving selected text to SnipBit" width="420" /> | <img src="docs/assets/screenshots/collections.png" alt="SnipBit collections sidebar and snippet list" width="520" /> |
+
+---
+
+## How it works
+
+SnipBit has three primary surfaces:
+
+| Surface | Purpose |
+| --- | --- |
+| **Popup** | Fast search, filtering, and one-click snippet copy. |
+| **Side panel** | Full library management, editing, collections, and preferences. |
+| **Context menu** | Save highlighted webpage text directly into SnipBit. |
+
+The extension stores all user data locally in Chrome extension storage.
+
+---
 
 ## Collections
 
-Collections are named groups that keep related snippets together.
+Collections are named groups for keeping related snippets together.
 
-### How it works
+### Collection workflows
 
 - Create a collection from the side panel sidebar.
-- Assign any snippet to a collection when creating or editing it.
-- Move a snippet between collections by editing its Collection field.
-- Filter the snippet list by All, Favorites, Unassigned, or any collection.
-- The popup shows the same collection filters as compact chips above the search bar.
-- Snippets captured from the right-click context menu save to Unassigned by default. Set `defaultCollectionId` in preferences storage to assign them automatically.
+- Assign a snippet to a collection when creating or editing it.
+- Move a snippet between collections by changing its Collection field.
+- Filter snippets by All, Favorites, Unassigned, or any collection.
+- View the same collection filters in the popup.
+- Save highlighted text to the default collection when configured, or to Unassigned by default.
 
 ### Deleting a collection
 
-Deleting a collection does not delete its snippets. All affected snippets move to Unassigned. A confirmation dialog explains this before the action completes.
+Deleting a collection does **not** delete its snippets.
 
-### Storage keys
+When a collection is deleted:
 
-| Key                   | Contents                                          |
-| --------------------- | ------------------------------------------------- |
-| `snipbit.snippets`    | All snippets                                      |
-| `snipbit.collections` | All collections                                   |
-| `snipbit.preferences` | User preferences (default collection, sort modes) |
+1. Snippets inside the collection are kept.
+2. Their `collectionId` is set to `null`.
+3. Those snippets move to **Unassigned**.
+
+A confirmation dialog explains this before the deletion completes.
+
+---
+
+## Storage
+
+SnipBit uses local Chrome extension storage.
+
+| Key | Contents |
+| --- | --- |
+| `snipbit.snippets` | All snippets |
+| `snipbit.collections` | All collections |
+| `snipbit.preferences` | User preferences, default collection, and sort modes |
 
 Existing data from before collections were added migrates automatically. Snippets without a `collectionId` field are treated as Unassigned.
 
-## Current limitations
-
-- No nested folders.
-- No drag-and-drop ordering of collections or snippets.
-- No import or export of snippets or collections.
-- The right-click context menu always saves to the default collection (or Unassigned). There is no submenu to choose a collection at capture time.
-- No keyboard shortcuts for collections.
-- No cloud sync.
-
-## Future improvements
-
-- Drag-and-drop ordering for collections and snippets.
-- Nested folders.
-- Import and export (JSON, CSV).
-- Collection-specific context menu save (`Save to... > [collection name]`).
-- Keyboard shortcuts for filtering and creating snippets.
-- Sync support via `chrome.storage.sync`.
+---
 
 ## Install
 
@@ -70,57 +166,84 @@ Existing data from before collections were added migrates automatically. Snippet
 npm install
 ```
 
+---
+
 ## Development
 
 ```bash
 npm run dev
 ```
 
-`npm run dev` uses `vite build --watch`, which rebuilds the unpacked extension output in `dist/`. Reload the extension from `chrome://extensions` after changes.
+`npm run dev` uses `vite build --watch`, which rebuilds the unpacked extension output in `dist/`.
 
-## Typecheck And Build
+After changes, reload the extension from:
+
+```txt
+chrome://extensions
+```
+
+---
+
+## Typecheck and build
 
 ```bash
 npm run typecheck
 npm run build
 ```
 
-## Load Unpacked In Chrome
+---
 
-1. Run `npm run build`.
-2. Open `chrome://extensions`.
-3. Enable Developer Mode.
-4. Click `Load unpacked`.
+## Load unpacked in Chrome
+
+1. Run:
+
+   ```bash
+   npm run build
+   ```
+
+2. Open:
+
+   ```txt
+   chrome://extensions
+   ```
+
+3. Enable **Developer Mode**.
+4. Click **Load unpacked**.
 5. Select the generated `dist/` folder.
-
-After loading, use the toolbar action for the popup, or pin the extension and use the `Manage library` button to open the side panel.
-
-## Permissions
-
-- `storage`: Stores snippets locally on the device.
-- `contextMenus`: Adds the `Save selection to SnipBit` right-click action.
-- `sidePanel`: Opens the richer management UI from the popup.
-
-SnipBit does not request host permissions, inject remote code, use analytics, or require a backend.
-
-## Current Limitations
-
-- Clipboard writes rely on extension-page permissions and a DOM fallback, so browser-specific clipboard quirks can still apply.
-- The side panel is optimized for Chromium browsers that support the Manifest V3 `sidePanel` API.
-- Keyboard hints are stored for future shortcut support, but they are not wired to commands yet.
-
-## Future Enhancements
-
-- Add import and export for snippet backups.
-- Add snippet folders or saved filters.
-- Add keyboard shortcuts and optional quick-insert workflows.
-- Add richer metadata views for captured page snippets.
+6. Pin SnipBit to your toolbar.
+7. Open the popup or use **Manage library** to open the side panel.
 
 ---
 
-## CI/CD
+## Permissions
 
-### Local commands
+SnipBit requests only the permissions needed for its core workflows.
+
+| Permission | Why it is used |
+| --- | --- |
+| `storage` | Stores snippets, collections, and preferences locally on the device. |
+| `contextMenus` | Adds the `Save selection to SnipBit` right-click action. |
+| `sidePanel` | Opens the richer management UI from the popup. |
+
+SnipBit does **not** request host permissions, inject remote code, use analytics, or require a backend.
+
+---
+
+## Privacy
+
+SnipBit is designed to be local-first.
+
+- No account required.
+- No analytics.
+- No backend.
+- No remote code.
+- No host permissions.
+- No third-party data sharing.
+- Snippets are stored locally with `chrome.storage.local`.
+
+---
+
+## Local commands
 
 ```bash
 # Type check
@@ -135,14 +258,28 @@ npm run build
 # Validate the built extension
 npm run validate:extension
 
-# Package into a Chrome Web Store-ready ZIP (artifacts/snipbit-chrome-vX.Y.Z.zip)
+# Package into a Chrome Web Store-ready ZIP
 npm run package:extension
 
-# Full pre-release check (build + validate + package)
+# Full pre-release check
 npm run release:check
 ```
 
-### Version bumping
+Packaged extension ZIPs are generated in:
+
+```txt
+artifacts/
+```
+
+Example output:
+
+```txt
+artifacts/snipbit-chrome-vX.Y.Z.zip
+```
+
+---
+
+## Versioning
 
 `manifest.json` is the source of truth for the Chrome extension version. `package.json` is kept in sync automatically.
 
@@ -152,7 +289,7 @@ npm run version:minor   # 0.1.0 -> 0.2.0
 npm run version:major   # 0.1.0 -> 1.0.0
 ```
 
-After bumping, commit and push the tag to trigger a GitHub Release:
+After bumping the version:
 
 ```bash
 git add manifest.json package.json
@@ -161,35 +298,191 @@ git tag v1.0.0
 git push origin main --tags
 ```
 
-### Workflows
+---
 
-| Workflow | Trigger                       | Purpose                                            |
-| -------- | ----------------------------- | -------------------------------------------------- |
-| CI       | Push to `main`, pull requests | Type check, lint, build, validate, upload artifact |
-| Package  | Manual (`workflow_dispatch`)  | Build and package a ZIP for inspection             |
-| Release  | Tag push `v*.*.*` or manual   | Create GitHub Release with ZIP attached            |
-| Publish  | Manual (`workflow_dispatch`)  | Upload and publish to the Chrome Web Store         |
+## CI/CD
 
-### Required GitHub secrets and variables
+SnipBit includes GitHub Actions workflows for validation, packaging, releases, and Chrome Web Store publishing.
 
-See [docs/chrome-web-store-publishing.md](docs/chrome-web-store-publishing.md) for the full setup guide.
+| Workflow | Trigger | Purpose |
+| --- | --- | --- |
+| **CI** | Push to `main`, pull requests | Typecheck, lint, build, validate, and upload an artifact. |
+| **Package** | Manual `workflow_dispatch` | Build and package a Chrome Web Store-ready ZIP for inspection. |
+| **Release** | Tag push `v*.*.*` or manual | Create a GitHub Release with the ZIP attached. |
+| **Publish** | Manual `workflow_dispatch` | Upload and submit the extension to the Chrome Web Store. |
 
-**Environment secrets** (set on the `chrome-web-store-production` environment):
+Publishing is intentionally manual and should run through the protected GitHub environment:
 
-| Secret              | Description                     |
-| ------------------- | ------------------------------- |
-| `CWS_EXTENSION_ID`  | Chrome Web Store item ID        |
-| `CWS_CLIENT_ID`     | Google OAuth2 client ID         |
-| `CWS_CLIENT_SECRET` | Google OAuth2 client secret     |
-| `CWS_REFRESH_TOKEN` | Long-lived OAuth2 refresh token |
+```txt
+chrome-web-store-production
+```
 
-**Repository variables** (optional overrides):
+---
 
-| Variable         | Default     | Description                       |
-| ---------------- | ----------- | --------------------------------- |
-| `EXTENSION_NAME` | `SnipBit`   | Display name for release titles   |
-| `NODE_VERSION`   | `20`        | Node.js version for all workflows |
-| `BUILD_DIR`      | `dist`      | Build output directory            |
-| `PACKAGE_DIR`    | `artifacts` | ZIP output directory              |
+## GitHub configuration
 
-For the full release process, see [docs/releasing.md](docs/releasing.md).
+### Repository variables
+
+Set these in:
+
+```txt
+Settings → Secrets and variables → Actions → Variables
+```
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `EXTENSION_NAME` | `SnipBit` | Display name for release titles and package names. |
+| `NODE_VERSION` | `24` | Node.js version for GitHub Actions. |
+| `BUILD_DIR` | `dist` | Build output directory. |
+| `PACKAGE_DIR` | `artifacts` | ZIP output directory. |
+
+### Environment secrets
+
+Set these in:
+
+```txt
+Settings → Environments → chrome-web-store-production → Environment secrets
+```
+
+| Secret | Description |
+| --- | --- |
+| `CWS_EXTENSION_ID` | Chrome Web Store item ID. |
+| `CWS_PUBLISHER_ID` | Chrome Web Store publisher ID. |
+| `CWS_CLIENT_ID` | Google OAuth2 web application client ID. |
+| `CWS_CLIENT_SECRET` | Google OAuth2 web application client secret. |
+| `CWS_REFRESH_TOKEN` | OAuth2 refresh token authorized for the Chrome Web Store API scope. |
+
+For full setup details, see:
+
+- [`docs/chrome-web-store-publishing.md`](docs/chrome-web-store-publishing.md)
+- [`docs/releasing.md`](docs/releasing.md)
+
+---
+
+## Release process
+
+For a normal update:
+
+1. Make changes on a feature branch.
+2. Open a pull request.
+3. Wait for CI to pass.
+4. Merge to `main`.
+5. Bump the extension version.
+6. Commit the version bump.
+7. Push a tag like `v1.0.1`.
+8. Confirm the GitHub Release was created with the packaged ZIP.
+9. Run the Chrome Web Store publish workflow with `dry_run: true`.
+10. Run the Chrome Web Store publish workflow with `dry_run: false`.
+
+Chrome Web Store publishing should not run automatically on every push to `main`.
+
+---
+
+## Project structure
+
+```txt
+.
+├── .github/
+│   ├── workflows/
+│   │   ├── ci.yml
+│   │   ├── package.yml
+│   │   ├── release.yml
+│   │   └── publish-chrome.yml
+│   ├── ISSUE_TEMPLATE/
+│   └── PULL_REQUEST_TEMPLATE.md
+├── docs/
+│   ├── assets/
+│   │   └── screenshots/
+│   ├── chrome-web-store-publishing.md
+│   └── releasing.md
+├── scripts/
+│   ├── package-extension.mjs
+│   ├── publish-chrome-web-store.mjs
+│   ├── validate-extension.mjs
+│   └── version-extension.mjs
+├── src/
+│   ├── background/
+│   ├── components/
+│   ├── hooks/
+│   ├── popup/
+│   ├── services/
+│   ├── sidepanel/
+│   ├── styles/
+│   ├── types/
+│   └── utils/
+├── manifest.json
+├── package.json
+├── tsconfig.json
+└── vite.config.ts
+```
+
+Actual file structure may vary slightly as the app evolves.
+
+---
+
+## Roadmap
+
+### Planned
+
+- Import/export for snippet backups.
+- Collection-specific context menu save.
+- Drag-and-drop ordering for snippets and collections.
+- Keyboard shortcuts for filtering, creating, and copying snippets.
+- Optional sync support.
+- Richer metadata views for captured page snippets.
+- More polished screenshot/demo assets for the public repo and Chrome Web Store listing.
+
+### Current limitations
+
+- No nested folders.
+- No drag-and-drop ordering yet.
+- No import/export yet.
+- Context-menu capture saves to the default collection or Unassigned.
+- Keyboard hints are stored but not wired to commands yet.
+- Clipboard writes rely on extension-page permissions and a DOM fallback, so browser-specific clipboard quirks can still apply.
+- The side panel is optimized for Chromium browsers that support the Manifest V3 `sidePanel` API.
+
+---
+
+## Documentation
+
+| Document | Purpose |
+| --- | --- |
+| [`docs/releasing.md`](docs/releasing.md) | Release checklist, versioning, and GitHub Release flow. |
+| [`docs/chrome-web-store-publishing.md`](docs/chrome-web-store-publishing.md) | Chrome Web Store API setup, required secrets, and publishing workflow. |
+
+---
+
+## Contributing
+
+This project is early and intentionally focused.
+
+Before contributing:
+
+1. Open an issue or discussion for larger changes.
+2. Keep PRs small and scoped.
+3. Run local checks before opening a pull request.
+
+```bash
+npm run typecheck
+npm run lint
+npm run build
+npm run validate:extension
+```
+
+---
+
+## Support
+
+Use GitHub Issues for bugs, feature requests, and release/publishing problems:
+
+- [Report a bug](https://github.com/bryan-shea/SnipBit/issues/new?template=bug_report.md)
+- [Request a feature](https://github.com/bryan-shea/SnipBit/issues/new?template=feature_request.md)
+
+---
+
+## License
+
+License information has not been added yet.
+
+Add a `LICENSE` file before distributing or accepting outside contributions.
