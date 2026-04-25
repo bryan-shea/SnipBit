@@ -1,6 +1,7 @@
 <p align="center">
-  <img width="712" height="224" alt="logo-white" src="https://github.com/user-attachments/assets/516de473-d2f1-47b6-8ecc-0ba4e1a2b6f0" />
-</p>
+  <img width="708" height="216" alt="SnipBit-Logo-1" src="https://github.com/user-attachments/assets/3d465e6e-6dea-499d-9713-95273751ae83" />
+</p
+
 
 
 [![CI](https://github.com/bryan-shea/SnipBit/actions/workflows/ci.yml/badge.svg)](https://github.com/bryan-shea/SnipBit/actions/workflows/ci.yml)
