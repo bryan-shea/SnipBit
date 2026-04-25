@@ -49,8 +49,6 @@
   ·
   <a href="#permissions">Permissions</a>
   ·
-  <a href="#cicd">CI/CD</a>
-  ·
   <a href="#roadmap">Roadmap</a>
 </p>
 
@@ -87,7 +85,7 @@ SnipBit runs locally in the browser. It does not require an account, backend, an
 
 ## Screenshots
 
-> Add finalized screenshots before public launch.
+> PENDING
 
 Create this folder and add the images below:
 
@@ -279,86 +277,6 @@ artifacts/snipbit-chrome-vX.Y.Z.zip
 
 ---
 
-## Versioning
-
-`manifest.json` is the source of truth for the Chrome extension version. `package.json` is kept in sync automatically.
-
-```bash
-npm run version:patch   # 0.1.0 -> 0.1.1
-npm run version:minor   # 0.1.0 -> 0.2.0
-npm run version:major   # 0.1.0 -> 1.0.0
-```
-
-After bumping the version:
-
-```bash
-git add manifest.json package.json
-git commit -m "chore: bump version to v1.0.0"
-git tag v1.0.0
-git push origin main --tags
-```
-
----
-
-## CI/CD
-
-SnipBit includes GitHub Actions workflows for validation, packaging, releases, and Chrome Web Store publishing.
-
-| Workflow | Trigger | Purpose |
-| --- | --- | --- |
-| **CI** | Push to `main`, pull requests | Typecheck, lint, build, validate, and upload an artifact. |
-| **Package** | Manual `workflow_dispatch` | Build and package a Chrome Web Store-ready ZIP for inspection. |
-| **Release** | Tag push `v*.*.*` or manual | Create a GitHub Release with the ZIP attached. |
-| **Publish** | Manual `workflow_dispatch` | Upload and submit the extension to the Chrome Web Store. |
-
-Publishing is intentionally manual and should run through the protected GitHub environment:
-
-```txt
-chrome-web-store-production
-```
-
----
-
-## GitHub configuration
-
-### Repository variables
-
-Set these in:
-
-```txt
-Settings → Secrets and variables → Actions → Variables
-```
-
-| Variable | Default | Description |
-| --- | --- | --- |
-| `EXTENSION_NAME` | `SnipBit` | Display name for release titles and package names. |
-| `NODE_VERSION` | `24` | Node.js version for GitHub Actions. |
-| `BUILD_DIR` | `dist` | Build output directory. |
-| `PACKAGE_DIR` | `artifacts` | ZIP output directory. |
-
-### Environment secrets
-
-Set these in:
-
-```txt
-Settings → Environments → chrome-web-store-production → Environment secrets
-```
-
-| Secret | Description |
-| --- | --- |
-| `CWS_EXTENSION_ID` | Chrome Web Store item ID. |
-| `CWS_PUBLISHER_ID` | Chrome Web Store publisher ID. |
-| `CWS_CLIENT_ID` | Google OAuth2 web application client ID. |
-| `CWS_CLIENT_SECRET` | Google OAuth2 web application client secret. |
-| `CWS_REFRESH_TOKEN` | OAuth2 refresh token authorized for the Chrome Web Store API scope. |
-
-For full setup details, see:
-
-- [`docs/chrome-web-store-publishing.md`](docs/chrome-web-store-publishing.md)
-- [`docs/releasing.md`](docs/releasing.md)
-
----
-
 ## Release process
 
 For a normal update:
@@ -375,48 +293,6 @@ For a normal update:
 10. Run the Chrome Web Store publish workflow with `dry_run: false`.
 
 Chrome Web Store publishing should not run automatically on every push to `main`.
-
----
-
-## Project structure
-
-```txt
-.
-├── .github/
-│   ├── workflows/
-│   │   ├── ci.yml
-│   │   ├── package.yml
-│   │   ├── release.yml
-│   │   └── publish-chrome.yml
-│   ├── ISSUE_TEMPLATE/
-│   └── PULL_REQUEST_TEMPLATE.md
-├── docs/
-│   ├── assets/
-│   │   └── screenshots/
-│   ├── chrome-web-store-publishing.md
-│   └── releasing.md
-├── scripts/
-│   ├── package-extension.mjs
-│   ├── publish-chrome-web-store.mjs
-│   ├── validate-extension.mjs
-│   └── version-extension.mjs
-├── src/
-│   ├── background/
-│   ├── components/
-│   ├── hooks/
-│   ├── popup/
-│   ├── services/
-│   ├── sidepanel/
-│   ├── styles/
-│   ├── types/
-│   └── utils/
-├── manifest.json
-├── package.json
-├── tsconfig.json
-└── vite.config.ts
-```
-
-Actual file structure may vary slightly as the app evolves.
 
 ---
 
@@ -484,5 +360,3 @@ Use GitHub Issues for bugs, feature requests, and release/publishing problems:
 ## License
 
 License information has not been added yet.
-
-Add a `LICENSE` file before distributing or accepting outside contributions.
